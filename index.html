@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <title>ChronoRift Playable</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div id="hud"><b>ChronoRift</b><span id="status">run pending</span><span id="echoLabel">ecos 0</span><span id="fps">fps --</span></div>
+  <div id="msg">GitHub Pages run-first. Usa ⚠ para reportes.</div>
+  <div id="top"><button id="helpBtn">?</button><button id="debugBtn">⚠</button></div>
+  <div id="joy"><div id="knob"></div></div>
+  <div id="buttons">
+    <button data-act="A">Rift A</button><button data-act="B">Rift B</button>
+    <button data-act="T">Time</button><button data-act="L">Lens</button>
+    <button data-act="F">Field</button><button data-act="X">Clear</button>
+  </div>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Controles</h1><p>Objetivo: abre la puerta con placa, bloque o eco temporal y llega al portal verde.</p><ul><li>Joystick: moverse.</li><li>Tocar mapa: apuntar.</li><li>Rift A/B: portales.</li><li>Time: eco futuro.</li><li>Lens: huellas.</li><li>Field: atrae bloque.</li></ul></section>
+  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
+  <script src="app.js"></script>
+</body>
+</html>
