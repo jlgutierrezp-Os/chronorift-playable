@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.6</title>
-  <link rel="stylesheet" href="style.css?v=1.6.0">
+  <title>ChronoRift Playable v1.6.1</title>
+  <link rel="stylesheet" href="style.css?v=1.6.1">
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.6</span><span id="echoLabel">mapa 180°</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.6 / View activa 1P; Rift B techo-pared-piso con gravedad portal.</div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.6.1</span><span id="echoLabel">visual polish</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.6.1 / visual polish; runtime estable v1.6.</div>
   <div id="top"><button id="helpBtn">?</button><button id="debugBtn">⚠</button></div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
@@ -17,8 +17,8 @@
     <button data-act="T">Time</button><button data-act="L">View</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Controles v1.6</h1><p><b>Objetivo:</b> encaja la caja blanca en el umbral verde. Rift B solo puede dirigirse a una pared o área visible dentro del frente de 180°.</p><ul><li>View: alterna entre mapa aéreo y primera persona.</li><li>Primera persona: arriba = techo, centro = pared, abajo = piso para Rift B.</li><li>Rift techo/piso activa caída simulada de 9.8 m/s² en loop.</li><li>Rift pared cambia la dirección de caída hacia la salida del portal.</li><li>Mapa aéreo: muestra cono de visibilidad frontal de 180°.</li><li>La caja puede atravesar portales y debe hacer snap al resolver.</li></ul></section>
-  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug v1.6</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Controles v1.6.1</h1><p><b>Objetivo:</b> conserva la jugabilidad estable de v1.6 con una capa visual más limpia.</p><ul><li>View: alterna entre mapa aéreo y primera persona.</li><li>Primera persona: arriba = techo, centro = pared, abajo = piso para Rift B.</li><li>Rift techo/piso activa caída simulada.</li><li>La caja puede atravesar portales y debe hacer snap al resolver.</li><li>Este parche no modifica movimiento.</li></ul></section>
+  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug v1.6.1</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
   <script src="app.js?v=1.6.0"></script>
 </body>
 </html>
