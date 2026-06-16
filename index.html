@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.4</title>
-  <link rel="stylesheet" href="style.css?v=1.4.0">
+  <title>ChronoRift Playable v1.4.1</title>
+  <link rel="stylesheet" href="style.css?v=1.4.1">
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.4</span><span id="echoLabel">stage 1</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.4 / Stage 1: caja blanca → umbral verde.</div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.4.1</span><span id="echoLabel">stage 1</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.4.1 / Stage 1: encaja la caja blanca en el umbral verde.</div>
   <div id="top"><button id="helpBtn">?</button><button id="debugBtn">⚠</button></div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
@@ -17,8 +17,8 @@
     <button data-act="T">Time</button><button data-act="L">Lens</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Controles v1.4</h1><p><b>Objetivo:</b> lleva la caja blanca al umbral verde. Ese contacto resuelve el puzzle.</p><ul><li>Joystick: moverte.</li><li>Empuja cerca de la caja: aceleración progresiva.</li><li>Field: campo gravitacional suave para transportar.</li><li>Rift A/B: portales direccionales con salida segura.</li><li>Lens + Time: portal temporal a estela cercana con salida segura.</li><li>El borde exterior es límite físico; si aparece un gris externo deliberado en futuras versiones, será área secreta descubierta.</li></ul></section>
-  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug v1.4</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
-  <script src="app.js?v=1.4.0"></script>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Controles v1.4.1</h1><p><b>Objetivo:</b> encaja la caja blanca en el umbral verde. La caja debe hacer snap, detenerse y resolver el puzzle.</p><ul><li>Joystick: moverte.</li><li>Empuja cerca de la caja: aceleración progresiva.</li><li>Field: campo gravitacional suave para transportar.</li><li>Rift A/B: portales direccionales con salida segura.</li><li>Lens + Time: portal temporal a estela cercana con salida segura.</li><li>El borde exterior es límite físico; si aparece un gris externo deliberado en futuras versiones, será área secreta descubierta.</li></ul></section>
+  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug v1.4.1</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
+  <script src="app.js?v=1.4.1"></script>
 </body>
 </html>
