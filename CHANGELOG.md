@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.4
+
+- Stage 1 clarity pass: the white block must be moved into the green goal square to solve the puzzle.
+- Added explicit success condition and message: `PUZZLE RESUELTO · caja en umbral verde`.
+- Player touching the green square no longer counts as solving the stage; block-to-goal is the stage condition.
+- Added clearer green goal treatment with pulse, label, and architectural frame.
+- Added a first brutalist-zen aesthetic pass: darker concrete palette, calmer surfaces, white-light boundary, less toy-like flat color.
+- Added stage label overlay: `STAGE 1 · caja → umbral verde`.
+- SelfDebug now frames Stage 1 review around goal clarity, boundary leaks, block transport, HUD intrusion, and aesthetics.
+- Secret-area semantics documented in help text but not activated as accidental boundary escape.
+- Still no workflows, dependencies, secrets, npm, or cross-repo access.
+
 ## v1.3
 
 - Added hard outer-boundary clamp for player, block, echoes, and portal exits.
