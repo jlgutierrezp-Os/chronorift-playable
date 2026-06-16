@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.1
+
+- Increased goal-fit tolerance so the white block does not need a perfect center fit.
+- Added snap-to-goal behavior when the block reaches the green threshold.
+- Added block lock on puzzle solve: the block stops moving and stops rotating.
+- Updated success message to `PUZZLE RESUELTO · caja encajada en umbral verde`.
+- Refined the goal from simple green square to softer `umbral` visual language.
+- Slightly darkened and calmed the brutalist-zen palette.
+- Still no workflows, dependencies, secrets, npm, or cross-repo access.
+
 ## v1.4
 
 - Stage 1 clarity pass: the white block must be moved into the green goal square to solve the puzzle.
