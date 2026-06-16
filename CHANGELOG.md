@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3
+
+- Added hard outer-boundary clamp for player, block, echoes, and portal exits.
+- Added sub-step movement to reduce high-speed tunneling through walls.
+- Added safe portal exit search for spatial and temporal rifts.
+- Added block velocity cap to reduce boundary escape risk.
+- Added visible outer boundary stroke.
+- SelfDebug now classifies boundary crossing as `collision_error` and recommends staying on boundary fix until confirmed.
+- Still no workflows, dependencies, secrets, npm, or cross-repo access.
+
 ## v1.2
 
 - Added gravitational push assist for the white block.
