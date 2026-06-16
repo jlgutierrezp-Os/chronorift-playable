@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.2
+
+- Added gravitational push assist for the white block.
+- Near-contact block movement now responds with progressive acceleration.
+- Field button now creates a soft transport/tether behavior.
+- Added gentle goal assist when the block is near the green square and the player is nearby.
+- Added visible assist halo and tether when block assist is active.
+- SelfDebug now includes a broader header for movement feel, block transport, target behavior, and gravitational push feedback.
+- Still no workflows, dependencies, secrets, npm, or cross-repo access.
+
 ## v1.1
 
 - Promoted Batch 0 as human-runnable based on iPhone feedback.
