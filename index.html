@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.6.6</title>
+  <title>ChronoRift Playable v1.7</title>
   <link rel="stylesheet" href="style.css?v=1.6.1">
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.6.6</span><span id="echoLabel">view hotfix</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.6.6 / View hotfix + loop nativo.</div>
-  <div id="top"><button id="helpBtn">?</button><button id="debugBtn">Loop</button></div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.7</span><span id="echoLabel">PortalPair premium/dev</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.7 / PortalPair físico + Premium/Dev.</div>
+  <div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">DEV</button></div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
     <button data-act="A">Rift A</button><button data-act="B">Rift B</button>
-    <button data-act="T">Time</button><button data-act="L">View</button>
+    <button data-act="T">Loop</button><button data-act="L">View</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · View Hotfix v1.6.6</h1><p><b>Objetivo:</b> View no debe romperse aunque A/B todavía no existan.</p><ul><li>Loop: abre controles nativos.</li><li>Loop Caída: prueba caída techo-piso.</li><li>Loop Ascenso: prueba ascenso.</li><li>Hotfix: 1P ignora portales nulos.</li></ul></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · PortalPair v1.7</h1><p><b>Objetivo:</b> portal físico canónico con estética premium/dev. Base 2D + primera persona 2.5D progresiva, brutalist zen, sin copiar IP.</p><ul><li>Pair: controles nativos A Piso, B Techo, B Piso, Loop Caída, Loop Ascenso.</li><li>DEV/GAME: alterna información completa y vista premium.</li><li>PortalPair conserva velocidad y transforma salida por normales.</li><li>Floor sale arriba; Ceiling sale abajo; Wall sale por normal frontal.</li><li>View alterna mapa táctico 2D y primera persona 2.5D/proxy.</li></ul></section>
   <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug fallback</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="opcional"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
-  <script src="app.js?v=1.6.6"></script>
+  <script src="app.js?v=1.7.0"></script>
 </body>
 </html>
