@@ -290,21 +290,112 @@ awakening_arc:
   realization:
     - sees_the_loop
     - notices_PosAya_is_more_than_tool
+    - realizes_human_avatar_can_also_fold_and_unfold_through_activity
     - questions_work_life_balance
     - wants_to_help_gizmo
 
   new_desire:
+    - personalize_self_by_choice
     - help_PosAya
     - understand_the_system
     - create_other_paths
     - choose_relationship_over_loop_only
 ```
 
-El avatar no solo progresa en stats. También progresa en conciencia, vínculo y decisión.
+El avatar no solo progresa en stats. También progresa en conciencia, vínculo, capacidad de plegarse/desplegarse simbólicamente y decisión de personalizarse.
 
 ---
 
-## 10. Superconglomerado decisional
+## 10. Fold / Unfold humano y minijuego STUFFBOX
+
+```yaml
+human_fold_unfold_realization:
+  trigger: player_realizes_avatar_can_fold_and_unfold_through_activity
+  meaning:
+    - adaptacion_corporal_y_funcional
+    - agencia_sobre_el_uniforme_y_la_presencia
+    - sincronizacion_con_la_logica_foldable_de_PosAya
+    - personalizacion_como_despertar_no_como_consumo_obligatorio
+
+  states:
+    folded:
+      meaning: avatar_en_modo_funcional_de_compania
+      visual: uniforme_base_badge_minimo_sin_items_visibles
+
+    semi_folded:
+      meaning: avatar_con_acceso_parcial_a_STUFFBOX
+      visual: pequenos_items_visibles_y_modificaciones_discretas
+
+    unfolded:
+      meaning: avatar_expresa_identidad_de_juego_elegida_y_colabora_con_PosAya
+      visual: capas_personales_patrones_texturas_y_herramientas_visibles
+```
+
+Cuando el humano comprende que él también puede plegarse y desplegarse mediante actividad, decide personalizarse. La personalización deja de ser adorno y se vuelve decisión narrativa: cuánto del yo de juego entra al uniforme, al cuerpo, al badge y al vínculo con Pos.Aya.
+
+```yaml
+stuffbox_minigame:
+  name: STUFFBOX_supervision_balance
+  role: minigame_narrativo_de_discrecion_y_consecuencia
+
+  player_options:
+    equip_discreetly:
+      meaning: usar_item_personal_sin_llamar_atencion
+      possible_result: item_visible_low_risk
+
+    hide_item:
+      meaning: conservar_item_en_STUFFBOX_sin_equipar
+      possible_result: no_bonus_no_risk
+
+    declare_item:
+      meaning: aceptar_registro_administrativo
+      possible_result: administrative_fee_or_rule_note
+
+    pay_administrative_fine:
+      meaning: resolver_consecuencia_de_forma_transparente
+      possible_result: coin_cost_but_no_secret_penalty
+
+    accept_inspection:
+      meaning: someterse_a_revision_narrativa_del_mundo_de_juego
+      possible_result: consequence_note_or_clearance
+
+  risk_model:
+    visible_personal_item: increases_attention
+    non_standard_uniform_mod: increases_attention
+    repeated_loop_deviation: increases_attention
+    declared_item: reduces_hidden_risk_but_may_cost_coins
+
+  reward_model:
+    personal_expression: increases_attachment
+    useful_item: may_support_training_or_recovery
+    relationship_token: may_support_PosAya_bond
+    reflective_item: may_support_awareness_arc
+```
+
+La ruta de evasión de supervisión debe entenderse como minijuego diegético de discreción dentro de una compañía ficticia, no como vigilancia real ni como aprendizaje de evasión real. Siempre debe existir una alternativa legible: declarar, pagar multa administrativa, guardar el ítem o aceptar inspección.
+
+```yaml
+ethics_and_balance_gate:
+  required:
+    - consequences_are_clear_before_or_immediately_after_action
+    - player_can_choose_compliance_or_discretion
+    - no_hidden_real_tracking
+    - no_real_personal_data
+    - no_unfair_coin_trap
+    - no_grind_required_for_self_expression
+    - penalties_are_narrative_and_recoverable
+
+  narrative_question:
+    - cuanto_de_mi_puedo_llevar_al_trabajo
+    - cuanto_cuesta_ocultarme
+    - cuanto_cuesta_declararme
+    - cuando_el_loop_de_productividad_deja_de_ser_suficiente
+    - como_ayudo_a_PosAya_sin_perderme
+```
+
+---
+
+## 11. Superconglomerado decisional
 
 ```yaml
 superconglomerado_decisional:
@@ -314,12 +405,14 @@ superconglomerado_decisional:
     - "#stuffbox"
     - "#customization"
     - "#worklife"
+    - "#foldunfold"
+    - "#supervision"
     - "#posaya"
     - "#populares"
 
-  semantic_desire: crear_avatar_humano_neutro_customizable_con_STUFFBOX_badge_uniforme_y_progresion_de_balance_vida_trabajo
+  semantic_desire: crear_avatar_humano_neutro_customizable_con_STUFFBOX_badge_uniforme_fold_unfold_y_progresion_de_balance_vida_trabajo
 
-  creator_question: debe_el_avatar_humano_compartir_la_misma_logica_foldable_customizable_de_PosAya_sin_forzar_identidad_real
+  creator_question: debe_el_avatar_humano_compartir_la_misma_logica_foldable_customizable_de_PosAya_sin_forzar_identidad_real_y_con_minijuego_de_STUFFBOX_supervision_balance
 
   branches:
     A_design_only:
@@ -334,7 +427,11 @@ superconglomerado_decisional:
       meaning: separar_stats_entrenamiento_descanso_y_autocuidado
       risk: low_medium
 
-    D_future_runtime_candidate:
+    D_fold_unfold_STUFFBOX_minigame_spec:
+      meaning: detallar_minijuego_de_personalizacion_discrecion_multa_administrativa_y_supervision_ficticia
+      risk: low_medium
+
+    E_future_runtime_candidate:
       meaning: solo_despues_de_aprobacion_separada_para_build
       risk: medium
 
@@ -344,7 +441,7 @@ superconglomerado_decisional:
 
 ---
 
-## 11. Gates antes de cualquier build
+## 12. Gates antes de cualquier build
 
 ```yaml
 before_build_gates:
@@ -356,4 +453,5 @@ before_build_gates:
   - preserve_v1_8_8_box_goal_loop
   - customization_must_be_player_chosen
   - supervisor_system_is_fictional_not_real_surveillance
+  - STUFFBOX_consequences_must_be_readable_and_recoverable
 ```
