@@ -8,16 +8,20 @@ packet_status:
   repository_scope: chronorift_playable_only
   private_ingestion: forbidden
   automatic_feed_to_private_systems: forbidden
+  sensitive_exposure: forbidden
   credentials: none
   private_repo_links: none
   private_file_links: none
   external_runtime_activation: none
   intended_use: human_review_then_private_notes_if_approved
+  default_if_uncertain: do_not_publish
 ```
 
-This packet is designed for public review of ChronoRift development direction. It must not be treated as an ingestion source for any private Aid OS, LUU, Atlas, agentic, or production repository.
+This packet is designed for public review of ChronoRift development direction. It must not be treated as an ingestion source for any private Aid OS, LUU, Atlas, agentic, production, or private repository.
 
 The public repository is used only as the visible playable prototype and sanitized public documentation surface. Any private production planning must be performed by the human through private methods, private repositories, or private review workflows.
+
+No public document in this repository may expose sensitive information about private people, private systems, private repositories, private runtime contracts, private memory, credentials, secrets, unpublished private architecture, or private production notes.
 
 ---
 
@@ -30,7 +34,7 @@ purpose:
   tertiary: support_human_decision_after_security_evaluation
 ```
 
-This deliverable summarizes the operational contract, development constraints, safety boundaries, and decision format for ChronoRift. It is intentionally public-safe and does not expose private system internals.
+This deliverable summarizes the operational contract, development constraints, safety boundaries, and decision format for ChronoRift. It is intentionally public-safe and does not expose private person information or private system internals.
 
 ---
 
@@ -45,23 +49,37 @@ boundary:
     - public_testing_notes
     - non_sensitive_decision_framework
     - generic_agent_luu_review_packet
+    - human_review_boundary_notes
 
   public_forbidden:
+    - personal_sensitive_information
+    - private_person_information
+    - private_system_internals
     - private_repo_urls
     - private_file_paths
     - credentials
+    - api_keys
+    - secrets
     - private_Atlas_kernel_contents
     - private_Aid_OS_runtime_designs
-    - personal_sensitive_data
+    - private_runtime_contracts
+    - private_memory_contents
+    - private_production_notes
+    - unpublished_private_architecture
     - automatic_ingestion_instructions
     - deployment_secrets
     - paid_api_keys
 
   transfer_rule:
-    - public_repo_may_contain_notes
+    - public_repo_may_contain_sanitized_notes
     - human_may_manually_review_notes
+    - human_may_create_private_derivative_only_if_separately_approved
     - private_systems_must_not_auto_ingest_public_repo
     - private_production_requires_separate_human_approved_flow
+    - direct_public_to_private_link_is_forbidden
+    - sensitive_information_transfer_is_forbidden
+
+  default_if_uncertain: do_not_publish
 ```
 
 ---
@@ -170,6 +188,8 @@ decision_cluster:
     - mobile_controls_ok
     - time_system_preserved
     - fp_view_not_blocking
+    - no_sensitive_public_exposure
+    - no_private_ingestion
 
   self_debug_update:
     learned_error:
@@ -206,6 +226,7 @@ optimization_policy:
     - verbose_runtime_comments
     - public_private_coupling
     - automatic_private_ingestion
+    - sensitive_public_exposure
     - excessive_HTML_patches_when_native_runtime_patch_is_safer
 
   alternate_route:
@@ -213,8 +234,10 @@ optimization_policy:
       - compaction_would_reduce_quality
       - refactor_risks_breaking_safe_point
       - public_repo_constraints_block_safe_private_design
+      - public_safety_boundary_is_unclear
     action:
       - keep_public_runtime_stable
+      - do_not_publish_sensitive_material
       - create_private_human_notes_separately
       - test_in_isolated_mode_before_integration
 ```
@@ -232,6 +255,7 @@ playable_constraints:
     - public_safe
     - human_tested
     - rollbackable
+    - sanitized_public_output_only
 
   core_loop:
     - move_player
@@ -262,6 +286,7 @@ self_debug_heuristic:
     - failed_expectation
     - repeated_error_category
     - safe_point_regression
+    - public_safety_risk
 
   classify:
     - P0_playability
@@ -270,12 +295,14 @@ self_debug_heuristic:
     - P3_visualization
     - P4_narrative
     - P5_optimization
+    - P6_public_safety_boundary
 
   fix:
     - smallest_executable_patch_first
     - preserve_validated_safe_point
     - add_test_for_same_error_category
     - avoid_same_failed_route
+    - do_not_publish_if_uncertain
 
   learn:
     - record_error_category
@@ -319,6 +346,11 @@ public_skill_registry_delta:
     status: candidate
     public_safe: true
     purpose: optimize_3D_like_view_without_breaking_physics
+
+  CHRONORIFT_PUBLIC_SAFETY_BOUNDARY:
+    status: active
+    public_safe: true
+    purpose: prevent_sensitive_public_exposure_and_private_ingestion
 ```
 
 ---
@@ -328,6 +360,7 @@ public_skill_registry_delta:
 ```yaml
 security_recommendation:
   public_repo_integration: approved_if_sanitized
+  sensitive_public_exposure: forbidden
   private_system_ingestion: not_approved
   human_review_required: true
   recommended_private_action:
@@ -337,7 +370,7 @@ security_recommendation:
     - do_not_link_public_repo_as_private_source
 ```
 
-The public packet may be used as a visible reference for discussion. It must not become an automatic source of truth for private Aid OS / LUU / Atlas systems.
+The public packet may be used as a visible reference for discussion. It must not become an automatic source of truth for private Aid OS / LUU / Atlas systems and must not expose private person or private system information.
 
 ---
 
@@ -348,6 +381,7 @@ recommended_next_decision:
   id: v1.8.9_compact_runtime_without_breaking_v1.8.8
   central_change: compact_runtime_after_safe_point
   required_gate: preserve_box_portal_goal_loop
+  safety_gate: no_sensitive_public_exposure
 
   branches:
     A_minimal:
