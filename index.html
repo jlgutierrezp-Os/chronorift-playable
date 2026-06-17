@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.8.6</title>
+  <title>ChronoRift Playable v1.8.7</title>
   <link rel="stylesheet" href="style.css?v=1.6.1">
   <style>
     #sceneHud{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 88px);z-index:6;width:min(310px,78vw);pointer-events:none;color:#f8fafc;font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
@@ -20,22 +20,22 @@
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8.6</span><span id="echoLabel">native FP math core</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.8.6 / FP math render core nativo.</div>
-  <div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">DEV</button></div>
-  <div id="sceneHud"><div id="sceneCard"><div id="corp">AI TA’AYÁ · PRODUCTIVITY LAB</div><div id="task">Módulo 01: entregue la caja al nodo verde</div><div id="aiLine">Bienvenido. Su productividad será medida con neutralidad emocional.</div><div id="metrics"><span id="timer">00.0s</span><span id="posaya">Pos.Aya: bloqueado</span><span id="score">entrega pendiente</span></div></div></div>
-  <div id="worm">PR Worm detectado · TithiTra / Pos.Aya activándose…</div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8.7</span><span id="echoLabel">box portal matrix</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.8.7 / Caja + matriz de portales.</div>
+  <div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">TEST</button></div>
+  <div id="sceneHud"><div id="sceneCard"><div id="corp">AI TA’AYÁ · PRODUCTIVITY LAB</div><div id="task">Módulo 01: transporte de caja por portal a meta verde</div><div id="aiLine">Prioridad: resolver logística de caja antes de más visuales.</div><div id="metrics"><span id="timer">00.0s</span><span id="posaya">PortalMatrix: activo</span><span id="score">caja pendiente</span></div></div></div>
+  <div id="worm">PR Worm detectado · matriz de portales activada…</div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
     <button data-act="A">Rift A</button><button data-act="B">Rift B</button>
     <button data-act="T">Time</button><button data-act="L">View</button>
-    <button data-act="F">Field</button><button data-act="X">Clear</button>
+    <button data-act="F">Grab</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Scene 01 · Native FP Math Render Core v1.8.6</h1><p><b>Objetivo:</b> optimizar la vista almost-3D / 3D-like con render matemático nativo: cámara suave, raycast adaptativo, z-buffer, shading por distancia, aperturas laterales y Lens Tiempo real.</p><ul><li>View: alterna MAP → SIDE → FP.</li><li>FP: arrastra para girar suavemente.</li><li>FP: toca zona superior/centro/inferior para seleccionar techo/pared/piso.</li><li>Raycast: paso adaptativo según pantalla/DPR.</li><li>Lens Tiempo: ahora oculta/muestra huellas y ecos dentro del canvas.</li><li>MAP/SIDE/FP conservan loops por vista.</li><li>Time conserva TithiTra, huellas temporales y eco futuro.</li></ul></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>v1.8.7 · Box Portal Transport Matrix</h1><p><b>Objetivo:</b> restaurar resolubilidad: agarrar o empujar caja, pasarla por portal A→B y llevarla al área verde.</p><ul><li>Grab: agarra/suelta caja si estás cerca.</li><li>Delivery Path: coloca A cerca de caja y B cerca de meta verde.</li><li>R→L / L→R / Top→Bottom / Bottom→Top: ensayos cardinales.</li><li>Run Matrix: prueba matemática de las cuatro combinaciones.</li><li>Time: conserva TithiTra y eco futuro.</li><li>View: conserva MAP → SIDE → FP.</li><li>Prioridad: caja resoluble y física de portal antes de estética.</li></ul></section>
   <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug fallback</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="opcional"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
-  <script src="app.js?v=1.8.6"></script>
+  <script src="app.js?v=1.8.7"></script>
   <script>
-  (()=>{const $=id=>document.getElementById(id);const start=performance.now();let phase=0,unlocked=false,completed=false,last='';const lines=[[0,'Bienvenido a Ai Ta’ayá. Su productividad será apreciada, medida y comparada.'],[3500,'Tarea asignada: transporte de contenedor. Use MAP para planear, SIDE para altura y FP para orientación 3D-like.'],[7500,'Actualización detectada: ai-taaya/fp-math-core#PR-WORM. Raycast, cámara y Lens se han movido al núcleo nativo.'],[10200,'Anomalía aceptada. TithiTra / Pos.Aya conserva tiempo, eco futuro, portales y targeting.'],[15000,'Sugerencia: observe aperturas laterales en FP y use Lens para revisar huellas temporales.']];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}function flash(){const w=$('worm');w.style.display='block';w.className='wormPulse';setTimeout(()=>{w.style.display='none';w.className=''},4200)}document.getElementById('debugBtn')?.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;flash()}},{capture:true});document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>{if(['A','B','T','L'].includes(b.dataset.act)&&!unlocked){unlocked=true;flash()}},{capture:true}));setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1]);if(i===3&&!unlocked){unlocked=true;flash()}}$('posaya').textContent=unlocked?'Pos.Aya: activo':'Pos.Aya: bloqueado';let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='entrega completada';setLine('Entrega registrada. El núcleo matemático almost-3D será auditado por Gobernanza de Productividad.')}else if(!completed){$('score').textContent=unlocked?'math/time optimizable':'entrega pendiente'}},250)})();
+  (()=>{const $=id=>document.getElementById(id);const start=performance.now();let phase=0,completed=false,last='';const lines=[[0,'Prioridad P0: caja debe volver a ser resoluble.'],[3500,'Use Grab para sujetar caja. Use Delivery Path para ruta A→B hacia meta verde.'],[7500,'Run Matrix revisa R→L, L→R, Top→Bottom, Bottom→Top.'],[12000,'Si la caja entra al área verde, el módulo vuelve a contar como resoluble.']];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1])}let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='caja entregada';setLine('Entrega registrada. Caja volvió a ser resoluble por portal.')}else if(!completed){$('score').textContent='caja pendiente'}},250)})();
   </script>
 </body>
 </html>
