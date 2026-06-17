@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.8.3</title>
+  <title>ChronoRift Playable v1.8.4</title>
   <link rel="stylesheet" href="style.css?v=1.6.1">
   <style>
     #sceneHud{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 88px);z-index:6;width:min(310px,78vw);pointer-events:none;color:#f8fafc;font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
@@ -20,8 +20,8 @@
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8.3</span><span id="echoLabel">view-gated loops + TithiTra</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.8.3 / Ensayos de loop por vista.</div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8.4</span><span id="echoLabel">FP raycast + TithiTra</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.8.4 / Primera persona con paredes, piso y techo.</div>
   <div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">DEV</button></div>
   <div id="sceneHud"><div id="sceneCard"><div id="corp">AI TA’AYÁ · PRODUCTIVITY LAB</div><div id="task">Módulo 01: entregue la caja al nodo verde</div><div id="aiLine">Bienvenido. Su productividad será medida con neutralidad emocional.</div><div id="metrics"><span id="timer">00.0s</span><span id="posaya">Pos.Aya: bloqueado</span><span id="score">entrega pendiente</span></div></div></div>
   <div id="worm">PR Worm detectado · TithiTra / Pos.Aya activándose…</div>
@@ -31,17 +31,17 @@
     <button data-act="T">Time</button><button data-act="L">View</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Scene 01 · View-Gated Loop Drills v1.8.3</h1><p><b>Objetivo:</b> cada loop solo se ensaya en la vista que lo enseña. MAP entrena rutas, SIDE entrena altura, BEHIND entrena profundidad.</p><ul><li>View: alterna MAP → SIDE → BEHIND.</li><li>MAP: solo muestra Ensayo MAP: Loop Ruta.</li><li>SIDE: solo muestra Ensayo SIDE: Loop Caída y Loop Ascenso.</li><li>BEHIND: solo muestra Ensayo BEHIND: Loop Profundidad.</li><li>Time: siempre disponible para TithiTra, huellas y eco futuro.</li><li>Pair: también conserva portales básicos A/B y Lens Tiempo.</li><li>DEV: normales, estado A/B, historial temporal y ecos.</li></ul></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Scene 01 · FP Raycast Labyrinth v1.8.4</h1><p><b>Objetivo:</b> la vista en primera persona ahora representa el laberinto real. FP muestra paredes, piso y techo; SIDE entrena altura; MAP entrena ruta.</p><ul><li>View: alterna MAP → SIDE → FP.</li><li>MAP: planeación aérea del laberinto.</li><li>SIDE: lectura de techo/piso y entrenamiento vertical.</li><li>FP: render raycast ligero del laberinto con paredes, techo y piso.</li><li>Q/E: girar en FP si usas teclado.</li><li>Time: siempre disponible para TithiTra, huellas y eco futuro.</li><li>Pair: conserva portales básicos A/B, loops por vista y Lens Tiempo.</li></ul></section>
   <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug fallback</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="opcional"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
-  <script src="app.js?v=1.8.3"></script>
+  <script src="app.js?v=1.8.4"></script>
   <script>
   (()=>{const $=id=>document.getElementById(id);const start=performance.now();let phase=0,unlocked=false,completed=false,last='';const lines=[
     [0,'Bienvenido a Ai Ta’ayá. Su productividad será apreciada, medida y comparada.'],
-    [3500,'Tarea asignada: transporte de contenedor hacia nodo verde. Use MAP para planear rutas estrechas.'],
-    [7500,'Actualización detectada: ai-taaya/view-gated-loops#PR-WORM. Los ensayos no autorizados serán bloqueados por vista.'],
-    [10200,'Anomalía aceptada. TithiTra / Pos.Aya disponible: huellas temporales, eco futuro y loops por perspectiva.'],
-    [15000,'Sugerencia corporativa: MAP ruta, SIDE altura, BEHIND profundidad. Elija la vista antes del ensayo.']
-  ];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}function flash(){const w=$('worm');w.style.display='block';w.className='wormPulse';setTimeout(()=>{w.style.display='none';w.className=''},4200)}function exportScene(){const packet={CHRONORIFT_SCENE1_PACKET:{build:'pages-v1.8.3_loop_view_gating',scene:'Ai Ta’ayá Narrow Maze + View-Gated Loops',elapsed:+((performance.now()-start)/1000).toFixed(1),posAya_unlocked:unlocked,completed,loop_gates:{MAP:['Loop Ruta'],SIDE:['Loop Caída','Loop Ascenso'],BEHIND:['Loop Profundidad']},runtime:'app.js v1.8.3'}};navigator.clipboard?.writeText(JSON.stringify(packet,null,2)).catch(()=>console.log(packet))}window.addEventListener('keydown',e=>{if(e.code==='KeyP')exportScene()});document.getElementById('debugBtn')?.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;flash()}},{capture:true});document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>{if(['A','B','T','L'].includes(b.dataset.act)&&!unlocked){unlocked=true;flash()}},{capture:true}));setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1]);if(i===3&&!unlocked){unlocked=true;flash()}}$('posaya').textContent=unlocked?'Pos.Aya: activo':'Pos.Aya: bloqueado';let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='entrega completada';setLine('Entrega registrada. Sus ensayos por vista serán revisados por Gobernanza de Productividad.');exportScene()}else if(!completed){$('score').textContent=unlocked?'loop/vista optimizable':'entrega pendiente'}},250)})();
+    [3500,'Tarea asignada: transporte de contenedor hacia nodo verde. Use MAP para planear y FP para orientarse dentro del laberinto.'],
+    [7500,'Actualización detectada: ai-taaya/fp-raycast#PR-WORM. La anomalía ahora reconstituye paredes, techo y piso en primera persona.'],
+    [10200,'Anomalía aceptada. TithiTra / Pos.Aya disponible: huellas temporales, eco futuro y perspectiva funcional.'],
+    [15000,'Sugerencia corporativa: MAP ruta, SIDE altura, FP profundidad y orientación espacial.']
+  ];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}function flash(){const w=$('worm');w.style.display='block';w.className='wormPulse';setTimeout(()=>{w.style.display='none';w.className=''},4200)}function exportScene(){const packet={CHRONORIFT_SCENE1_PACKET:{build:'pages-v1.8.4_fp_raycast_labyrinth',scene:'Ai Ta’ayá Narrow Maze + FP Raycast',elapsed:+((performance.now()-start)/1000).toFixed(1),posAya_unlocked:unlocked,completed,loop_gates:{MAP:['Loop Ruta'],SIDE:['Loop Caída','Loop Ascenso'],FP:['Loop Profundidad']},runtime:'app.js v1.8.4'}};navigator.clipboard?.writeText(JSON.stringify(packet,null,2)).catch(()=>console.log(packet))}window.addEventListener('keydown',e=>{if(e.code==='KeyP')exportScene()});document.getElementById('debugBtn')?.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;flash()}},{capture:true});document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>{if(['A','B','T','L'].includes(b.dataset.act)&&!unlocked){unlocked=true;flash()}},{capture:true}));setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1]);if(i===3&&!unlocked){unlocked=true;flash()}}$('posaya').textContent=unlocked?'Pos.Aya: activo':'Pos.Aya: bloqueado';let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='entrega completada';setLine('Entrega registrada. Su orientación espacial y uso del TithiTra serán revisados por Gobernanza de Productividad.');exportScene()}else if(!completed){$('score').textContent=unlocked?'fp/time optimizable':'entrega pendiente'}},250)})();
   </script>
 </body>
 </html>
