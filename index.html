@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.8</title>
+  <title>ChronoRift Playable v1.8.1</title>
   <link rel="stylesheet" href="style.css?v=1.6.1">
   <style>
     #sceneHud{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 88px);z-index:6;width:min(310px,78vw);pointer-events:none;color:#f8fafc;font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
@@ -20,28 +20,28 @@
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8</span><span id="echoLabel">Ai Ta’ayá onboarding</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.8 / Módulo 01: entrega de caja.</div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.8.1</span><span id="echoLabel">Ai Ta’ayá + TithiTra</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.8.1 / Tiempo restaurado.</div>
   <div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">DEV</button></div>
   <div id="sceneHud"><div id="sceneCard"><div id="corp">AI TA’AYÁ · PRODUCTIVITY LAB</div><div id="task">Módulo 01: entregue la caja al nodo verde</div><div id="aiLine">Bienvenido. Su productividad será medida con neutralidad emocional.</div><div id="metrics"><span id="timer">00.0s</span><span id="posaya">Pos.Aya: bloqueado</span><span id="score">entrega pendiente</span></div></div></div>
   <div id="worm">PR Worm detectado · TithiTra / Pos.Aya activándose…</div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
     <button data-act="A">Rift A</button><button data-act="B">Rift B</button>
-    <button data-act="T">Loop</button><button data-act="L">View</button>
+    <button data-act="T">Time</button><button data-act="L">View</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Scene 01 · Ai Ta’ayá Box Training</h1><p><b>Objetivo:</b> eres trabajador de Ai Ta’ayá. Debes entregar la caja al nodo verde. Una actualización accidental con PR Worm activa TithiTra / Pos.Aya y permite optimizar la entrega.</p><ul><li>GAME: claridad de techo/frente/piso, distancia y paralaje.</li><li>DEV: información completa, normales y estado A/B.</li><li>Pair: A Piso, B Techo, B Piso, Loop Caída, Loop Ascenso.</li><li>PortalPair conserva velocidad y transforma salida por normales.</li><li>View alterna mapa táctico 2D y primera persona 2.5D.</li></ul></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Scene 01 · Ai Ta’ayá Box Training + TithiTra</h1><p><b>Objetivo:</b> entregar la caja al nodo verde. La actualización accidental PR Worm activa TithiTra / Pos.Aya: huellas temporales, eco futuro y salto temporal.</p><ul><li>Time: vuelve a una huella reciente y deja un eco futuro.</li><li>Pair: A Piso, B Techo, B Piso, Loop Caída, Loop Ascenso, Time Shift, Lens Tiempo.</li><li>GAME: claridad de techo/frente/piso, distancia, paralaje y tiempo.</li><li>DEV: información completa, normales, estado A/B, historial y ecos.</li><li>PortalPair conserva velocidad y transforma salida por normales.</li></ul></section>
   <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug fallback</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="opcional"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
-  <script src="app.js?v=1.7.1"></script>
+  <script src="app.js?v=1.8.1"></script>
   <script>
   (()=>{const $=id=>document.getElementById(id);const start=performance.now();let phase=0,unlocked=false,completed=false,last='';const lines=[
     [0,'Bienvenido a Ai Ta’ayá. Su productividad será apreciada, medida y comparada.'],
     [3500,'Tarea asignada: transporte de contenedor hacia nodo verde. Evite interpretaciones creativas.'],
     [7500,'Actualización de módulo detectada: ai-taaya/delivery-flow#PR-WORM. Esto es probablemente normal.'],
-    [10200,'Anomalía aceptada por el sistema. TithiTra / Pos.Aya disponible para reposicionamiento productivo.'],
-    [15000,'Sugerencia corporativa: use Pair para crear accesos. Optimizar tiempo también cuenta como obedecer.']
-  ];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}function flash(){const w=$('worm');w.style.display='block';w.className='wormPulse';setTimeout(()=>{w.style.display='none';w.className=''},4200)}function exportScene(){const packet={CHRONORIFT_SCENE1_PACKET:{build:'pages-v1.8_scene1_ai_taaya_box_training',scene:'Ai Ta’ayá Box Training',elapsed:+((performance.now()-start)/1000).toFixed(1),posAya_unlocked:unlocked,completed,rule:'box_delivery_then_PR_Worm_then_PosAya',runtime:'app.js v1.7.1 preserved'}};navigator.clipboard?.writeText(JSON.stringify(packet,null,2)).catch(()=>console.log(packet))}window.addEventListener('keydown',e=>{if(e.code==='KeyP')exportScene()});document.getElementById('debugBtn')?.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;flash()}},{capture:true});document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>{if(['A','B','T'].includes(b.dataset.act)&&!unlocked){unlocked=true;flash()}},{capture:true}));setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1]);if(i===3&&!unlocked){unlocked=true;flash()}}$('posaya').textContent=unlocked?'Pos.Aya: activo':'Pos.Aya: bloqueado';let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='entrega completada';setLine('Entrega registrada. Su eficiencia es estadísticamente sospechosa. Recursos Humanos ha sido notificado.');exportScene()}else if(!completed){$('score').textContent=unlocked?'optimización habilitada':'entrega pendiente'}},250)})();
+    [10200,'Anomalía aceptada por el sistema. TithiTra / Pos.Aya disponible: huellas temporales y eco futuro.'],
+    [15000,'Sugerencia corporativa: use Time o Pair para optimizar entrega. Recordar el tiempo ahora es parte de obedecer.']
+  ];function setLine(t){if(t!==last){$('aiLine').textContent=t;last=t}}function flash(){const w=$('worm');w.style.display='block';w.className='wormPulse';setTimeout(()=>{w.style.display='none';w.className=''},4200)}function exportScene(){const packet={CHRONORIFT_SCENE1_PACKET:{build:'pages-v1.8.1_time_layer_restore',scene:'Ai Ta’ayá Box Training + TithiTra',elapsed:+((performance.now()-start)/1000).toFixed(1),posAya_unlocked:unlocked,completed,rule:'box_delivery_PR_Worm_PosAya_time_restore',runtime:'app.js v1.8.1'}};navigator.clipboard?.writeText(JSON.stringify(packet,null,2)).catch(()=>console.log(packet))}window.addEventListener('keydown',e=>{if(e.code==='KeyP')exportScene()});document.getElementById('debugBtn')?.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;flash()}},{capture:true});document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>{if(['A','B','T'].includes(b.dataset.act)&&!unlocked){unlocked=true;flash()}},{capture:true}));setInterval(()=>{let t=performance.now()-start;$('timer').textContent=(t/1000).toFixed(1)+'s';for(let i=0;i<lines.length;i++)if(t>=lines[i][0]&&phase<i+1){phase=i+1;setLine(lines[i][1]);if(i===3&&!unlocked){unlocked=true;flash()}}$('posaya').textContent=unlocked?'Pos.Aya: activo':'Pos.Aya: bloqueado';let status=$('status')?.textContent||'';let msg=$('msg')?.textContent||'';if(!completed&&(status.includes('resuelto')||msg.includes('PUZZLE RESUELTO'))){completed=true;$('score').textContent='entrega completada';setLine('Entrega registrada. Su eficiencia es estadísticamente sospechosa. Recursos Humanos ha sido notificado.');exportScene()}else if(!completed){$('score').textContent=unlocked?'tiempo optimizable':'entrega pendiente'}},250)})();
   </script>
 </body>
 </html>
