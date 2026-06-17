@@ -7,6 +7,7 @@ human_decision_recommendation:
   public_repo_integration: accepted
   private_ingestion: rejected
   use_case: public_review_packet_only
+  sensitive_exposure: forbidden
   next_private_step:
     - humano_revisa_documento_publico
     - humano_extrae_notas_seguras
@@ -22,7 +23,45 @@ The public ChronoRift repository may contain sanitized public review documents, 
 
 The public repository must not be used as an automatic source for any private Aid OS, LUU, Atlas, agentic, production, or private knowledge system.
 
-## 2. Accepted public use
+## 2. No-sensitive-exposure rule
+
+```yaml
+no_sensitive_exposure_rule:
+  status: binding
+  applies_to:
+    - public_documents
+    - public_build_notes
+    - public_review_packets
+    - public_issue_or_decision_records
+    - public_agent_luu_packets
+
+  forbidden_public_content:
+    - personal_sensitive_information
+    - private_person_information
+    - private_system_internals
+    - private_repository_links
+    - private_file_paths
+    - credentials
+    - api_keys
+    - secrets
+    - private_runtime_contracts
+    - private_memory_contents
+    - private_production_notes
+    - unpublished_private_architecture
+    - automatic_private_ingestion_instructions
+
+  allowed_public_content:
+    - sanitized_gameplay_status
+    - public_safe_build_notes
+    - generic_design_intent
+    - non_sensitive_decision_records
+    - human_review_boundary_notes
+    - public_safe_testing_results
+
+  default_if_uncertain: do_not_publish
+```
+
+## 3. Accepted public use
 
 ```yaml
 accepted_public_use:
@@ -33,7 +72,7 @@ accepted_public_use:
   - public_safe_testing_notes
 ```
 
-## 3. Rejected private ingestion
+## 4. Rejected private ingestion
 
 ```yaml
 rejected_private_ingestion:
@@ -45,7 +84,7 @@ rejected_private_ingestion:
   - private_runtime_activation_from_public_file
 ```
 
-## 4. Human-only transfer rule
+## 5. Human-only transfer rule
 
 ```yaml
 human_only_transfer_rule:
@@ -54,15 +93,16 @@ human_only_transfer_rule:
   human_creates_private_derivative: allowed_if_separately_approved
   direct_public_to_private_link: forbidden
   automatic_ingestion: forbidden
+  sensitive_information_transfer: forbidden
 ```
 
-## 5. Decision cluster
+## 6. Decision cluster
 
 ```yaml
 decision_cluster:
   central_change:
     id: public_private_boundary_lock_v1
-    intent: preserve_public_review_value_without_private_ingestion_risk
+    intent: preserve_public_review_value_without_private_ingestion_or_sensitive_exposure_risk
     safe_point_preserved: v1.8.8_box_goal_snap_assist_stage_transition
 
   branches:
@@ -82,45 +122,60 @@ decision_cluster:
       selected: false
       forbidden: true
 
+    D_sensitive_publication:
+      effect: would_expose_private_person_or_private_system_information
+      risk: critical
+      selected: false
+      forbidden: true
+
   dependencies:
     required:
       - sanitized_public_language
       - no_private_links
       - no_credentials
       - no_runtime_activation
+      - no_sensitive_personal_or_private_system_information
     forbidden:
       - private_repo_urls
       - public_to_private_auto_sync
       - private_kernel_disclosure
+      - sensitive_private_person_data
+      - sensitive_private_system_data
 
   interconnections:
     preserves:
       - public_playable_repo_boundary
       - private_Aid_OS_LUU_Atlas_independence
       - human_review_authority
+      - private_person_and_private_system_confidentiality
     must_not_touch:
       - private_repositories
       - private_memory_systems
       - private_runtime_contracts
+      - private_person_records
+      - private_sensitive_context
 
   executable_fix:
     file: docs/HUMAN_DECISION_PUBLIC_REVIEW_BOUNDARY_V1.md
     patch_type: public_sanitized_decision_record
-    expected_result: clear_public_private_boundary_for_future_reviews
+    expected_result: clear_public_private_boundary_and_no_sensitive_exposure_rule
 
   regression_gates:
     - no_private_ingestion
     - no_private_links
     - no_credentials
+    - no_sensitive_personal_data
+    - no_private_system_internals
     - no_automatic_runtime_activation
     - human_review_required
 ```
 
-## 6. Security outcome
+## 7. Security outcome
 
 ```yaml
 security_outcome:
-  public_documentation: allowed
+  public_documentation: allowed_if_sanitized
+  sensitive_public_exposure: forbidden
   private_ingestion: denied
   decision_authority: human
   future_private_use: only_after_separate_private_human_approval
