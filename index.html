@@ -3,22 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ChronoRift Playable v1.6.1</title>
+  <title>ChronoRift Playable v1.6.2</title>
   <link rel="stylesheet" href="style.css?v=1.6.1">
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.6.1</span><span id="echoLabel">visual polish</span><span id="fps">fps --</span></div>
-  <div id="msg">ChronoRift v1.6.1 / visual polish; runtime estable v1.6.</div>
-  <div id="top"><button id="helpBtn">?</button><button id="debugBtn">⚠</button></div>
+  <div id="hud"><b>ChronoRift</b><span id="status">html-v1.6.2</span><span id="echoLabel">live tune</span><span id="fps">fps --</span></div>
+  <div id="msg">ChronoRift v1.6.2 / juega y marca sensaciones con Tune.</div>
+  <div id="top"><button id="helpBtn">?</button><button id="debugBtn">Tune</button></div>
   <div id="joy"><div id="knob"></div></div>
   <div id="buttons">
     <button data-act="A">Rift A</button><button data-act="B">Rift B</button>
     <button data-act="T">Time</button><button data-act="L">View</button>
     <button data-act="F">Field</button><button data-act="X">Clear</button>
   </div>
-  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Controles v1.6.1</h1><p><b>Objetivo:</b> conserva la jugabilidad estable de v1.6 con una capa visual más limpia.</p><ul><li>View: alterna entre mapa aéreo y primera persona.</li><li>Primera persona: arriba = techo, centro = pared, abajo = piso para Rift B.</li><li>Rift techo/piso activa caída simulada.</li><li>La caja puede atravesar portales y debe hacer snap al resolver.</li><li>Este parche no modifica movimiento.</li></ul></section>
-  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug v1.6.1</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="observado / esperado / pasos"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
+  <section id="help" class="panel hidden"><button class="close" data-close="help">×</button><h1>Stage 1 · Live Tune v1.6.2</h1><p><b>Objetivo:</b> jugar primero. Usa Tune para marcar sensaciones sin escribir reportes.</p><ul><li>Good: sensación correcta.</li><li>Confuso: falta claridad visual.</li><li>Suave/Fuerza/Rápido/Lento: intención de fine tuning.</li><li>Blocker: algo impide jugar.</li><li>Export: copia sesión para el chat.</li></ul></section>
+  <section id="debug" class="panel hidden"><button class="close" data-close="debug">×</button><h1>SelfDebug fallback</h1><div id="cats" class="grid"></div><textarea id="note" placeholder="opcional"></textarea><div class="row"><button id="addReport">Agregar</button><button id="copyLast">Copiar último</button><button id="copyAll">Copiar todos</button><button id="clearReports">Limpiar</button><button data-close="debug">Volver</button></div><textarea id="reportOut" readonly></textarea><div id="reportList"></div></section>
   <script src="app.js?v=1.6.0"></script>
+  <script>
+  (()=>{const $=id=>document.getElementById(id),S={build:'pages-v1.6.2_live_tune_shell',started:new Date().toISOString(),events:[]};function m(kind,area){S.events.push({t:Math.round(performance.now()),kind,area,status:$('status')?.textContent||'',view:$('echoLabel')?.textContent||'',fps:$('fps')?.textContent||'',w:innerWidth,h:innerHeight});if(S.events.length>80)S.events.shift();$('msg').textContent='Tune: '+kind+' · '+area;$('msg').style.display='block'}function btn(t,k,a){let b=document.createElement('button');b.textContent=t;b.onclick=()=>k==='export'?ex():m(k,a);return b}async function ex(){let packet={CHRONORIFT_LIVE_TUNING_PACKET:{build:S.build,session:S,rule:'play_first_mark_during_play_export_after',runtime:'stable_v1.6',movement_changed:false,distillation_next:'apply only successful tuning defaults after human review'}};let txt=JSON.stringify(packet,null,2);try{await navigator.clipboard.writeText(txt);m('copied','session')}catch(e){$('reportOut').value=txt;m('manual_copy','session')}}let bar=document.createElement('div');bar.id='liveTune';bar.style.cssText='position:fixed;left:8px;right:8px;top:calc(env(safe-area-inset-top) + 90px);z-index:9;display:none;gap:6px;flex-wrap:wrap;pointer-events:auto';[['Good','good','feel'],['Confuso','confusing','clarity'],['Suave','smoother','motion'],['Fuerza+','more_force','box'],['Fuerza-','less_force','box'],['Rápido','faster','speed'],['Lento','slower','speed'],['Blocker','blocker','play'],['Export','export','session']].forEach(x=>bar.appendChild(btn(x[0],x[1],x[2])));document.body.appendChild(bar);$('debugBtn').onclick=()=>{bar.style.display=bar.style.display==='none'?'flex':'none';m(bar.style.display==='none'?'tune_off':'tune_on','ui')};document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('pointerdown',()=>m('button_'+b.dataset.act,'control'),{capture:true}));$('game').addEventListener('pointerdown',()=>m('tap_canvas','play'),{capture:true});m('load','system')})();
+  </script>
 </body>
 </html>
