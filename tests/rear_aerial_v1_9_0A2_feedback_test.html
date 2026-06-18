@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>ChronoRift A2 Feedback Star Test</title>
+<style>
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}html,body{margin:0;height:100%;overflow:hidden;background:#07090d;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}#game{position:fixed;inset:0;width:100%;height:100%;background:#050607;touch-action:none}#hud{position:fixed;left:8px;right:8px;top:calc(env(safe-area-inset-top) + 8px);z-index:5;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;pointer-events:none}#hud span,#hud b{padding:5px 8px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(0,0,0,.24);backdrop-filter:blur(5px)}#msg{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 82px);transform:translateX(-50%);z-index:5;max-width:88vw;text-align:center;padding:9px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.34);color:#e5e7eb;font-size:13px;pointer-events:none}#top{position:fixed;right:8px;top:calc(env(safe-area-inset-top) + 46px);z-index:7;display:flex;gap:6px}button{border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.28);color:#fff;border-radius:14px;font-weight:800;min-height:34px;touch-action:manipulation}#top button{width:54px}#feedbackBtn{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 46px);z-index:12;min-height:36px;padding:0 11px;background:rgba(9,35,38,.74);border-color:rgba(167,243,208,.32)}#joy{position:fixed;left:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);width:118px;height:118px;border-radius:50%;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.035);z-index:6;touch-action:none}#knob{position:absolute;left:38px;top:38px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.14)}#buttons{position:fixed;right:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);z-index:6;display:grid;grid-template-columns:repeat(2,54px);gap:7px}#buttons button{height:40px;font-size:10px}.note{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 88px);z-index:4;max-width:260px;padding:8px;border-radius:14px;border:1px solid rgba(167,243,208,.18);background:rgba(6,18,18,.34);font-size:10px;color:#dbeafe;pointer-events:none}#fbPanel{position:fixed;inset:calc(env(safe-area-inset-top) + 8px) 8px calc(env(safe-area-inset-bottom) + 8px) 8px;z-index:30;display:none;overflow:auto;padding:12px;border-radius:18px;border:1px solid rgba(167,243,208,.25);background:rgba(7,11,15,.96);backdrop-filter:blur(10px)}#fbPanel h1{font-size:17px;margin:0 0 8px}#fbPanel h2{font-size:13px;margin:10px 0 5px;color:#dbeafe}.row{display:flex;gap:7px;flex-wrap:wrap;margin:7px 0}.rating{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;padding:6px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);font-size:12px}.stars button{width:29px;min-height:29px;border-radius:10px;padding:0;color:#fef3c7}.tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tags label{font-size:11px;padding:7px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035)}textarea{width:100%;min-height:60px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0f172a;color:#fff;padding:8px;font:12px ui-monospace,Menlo,monospace;-webkit-user-select:text;user-select:text}#fbOut{min-height:170px}.small{font-size:11px;color:#cbd5e1}.hot{color:#fecaca}@media(max-width:430px){.tags{grid-template-columns:1fr}#buttons{grid-template-columns:repeat(2,52px)}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud"><b>ChronoRift</b><span id="status">A2-feedback-loading</span><span id="echoLabel">feedback priority</span><span id="fps">fps --</span></div>
+<div id="msg">Juega normal. Toca Feedback para estrellas y copiar paquete.</div>
+<div id="top"><button id="helpBtn">Pair</button><button id="debugBtn">TEST</button></div>
+<button id="feedbackBtn">Feedback</button>
+<div class="note">A2 + feedback: no es gameplay update. Sirve para priorizar batches.</div>
+<div id="joy"><div id="knob"></div></div>
+<div id="buttons"><button data-act="A">Rift A</button><button data-act="B">Rift B</button><button data-act="T">Time</button><button data-act="L">View</button><button data-act="F">Grab</button><button data-act="X">Clear</button></div>
+<section id="fbPanel">
+<h1>Feedback de jugador · ChronoRift</h1>
+<div class="row"><button id="fbClose">Volver al juego</button><button id="fbBuild">Generar paquete</button><button id="fbCopy">Copiar paquete</button><button id="fbReset">Limpiar</button></div>
+<p class="small">Selecciona estrellas como jugador regular. El paquete prioriza automáticamente el siguiente batch.</p>
+<h2>1. Experiencia por estrellas</h2>
+<div id="ratings"></div>
+<h2>2. Tags rápidos</h2>
+<div class="tags" id="tags"></div>
+<h2>3. Nota humana</h2>
+<textarea id="worked" placeholder="Qué funcionó o se sintió bien."></textarea>
+<textarea id="failed" placeholder="Qué falló, confundió o rompió flow."></textarea>
+<textarea id="freeNote" placeholder="Nota libre: qué continuar, optimizar o evitar."></textarea>
+<h2>4. Paquete copiable</h2>
+<textarea id="fbOut" readonly></textarea>
+</section>
+<script src="https://cdn.jsdelivr.net/gh/jlgutierrezp-Os/chronorift-playable@1a3bfb11fadc1f349f42b678e3e708f03b643e12/app.js"></script>
+<script>
+(()=>{'use strict';
+const cats=[['overall_experience','Experiencia general'],['controls','Controles'],['visibility','Visibilidad'],['objective_clarity','Claridad de objetivo'],['physics_feel','Física / sensación'],['portals','Portales'],['box_handling','Manejo de caja'],['flow_focus','Flow / foco'],['aesthetic_readability','Lectura estética']];
+const tags=['P0_no_carga','P0_no_puedo_jugar','controles_confusos','avatar_no_visible','caja_no_visible','portal_confuso','meta_confusa','flow_bueno','flow_roto','quiero_mas_3D','quiero_mas_logistica','quiero_gizmo','superficie_activa_confusa','optimizar_cámara','optimizar_física'];
+let scores=Object.fromEntries(cats.map(c=>[c[0],3]));
+const $=id=>document.getElementById(id),ratings=$('ratings'),tagBox=$('tags'),out=$('fbOut');
+function renderRatings(){ratings.innerHTML='';cats.forEach(([k,label])=>{let div=document.createElement('div');div.className='rating';let left=document.createElement('div');left.textContent=label;let s=document.createElement('div');s.className='stars';for(let i=1;i<=5;i++){let b=document.createElement('button');b.textContent=i<=scores[k]?'★':'☆';b.onclick=()=>{scores[k]=i;renderRatings();build()};s.appendChild(b)}div.append(left,s);ratings.appendChild(div)})}
+function renderTags(){tagBox.innerHTML='';tags.forEach(t=>{let l=document.createElement('label');l.innerHTML='<input type="checkbox" value="'+t+'"> '+t;tagBox.appendChild(l)})}
+function selectedTags(){return [...tagBox.querySelectorAll('input:checked')].map(x=>x.value)}
+function priority(){let min=Math.min(...Object.values(scores)),st=selectedTags();if(st.some(t=>t.startsWith('P0'))||min<=1)return'P0_blocker';if(scores.controls<3||scores.visibility<3||scores.box_handling<3||scores.portals<3)return'P1_runtime_core';if(scores.objective_clarity<4||scores.physics_feel<4||scores.flow_focus<4)return'P2_experience';return'P3_content_next'}
+function build(){let p={CHRONORIFT_PLAYER_FEEDBACK_PACKET:{build_or_test_url:location.href,timestamp:new Date().toISOString(),device_context:{userAgent:navigator.userAgent,viewport:{w:innerWidth,h:innerHeight},dpr:devicePixelRatio||1},stars:scores,quick_tags:selectedTags(),what_worked:$('worked').value,what_failed:$('failed').value,next_priority_guess:priority(),free_note:$('freeNote').value,copied_from_in_game_feedback_overlay:true}};out.value=JSON.stringify(p,null,2);return p}
+async function copy(){let txt=out.value||JSON.stringify(build(),null,2);try{await navigator.clipboard.writeText(txt);$('msg').textContent='Feedback copiado';$('msg').style.display='block'}catch(e){out.focus();out.select();$('msg').textContent='No copió automático; selecciona el texto';$('msg').style.display='block'}}
+$('feedbackBtn').onclick=()=>{$('fbPanel').style.display='block';build()};$('fbClose').onclick=()=>$('fbPanel').style.display='none';$('fbBuild').onclick=build;$('fbCopy').onclick=copy;$('fbReset').onclick=()=>{scores=Object.fromEntries(cats.map(c=>[c[0],3]));['worked','failed','freeNote'].forEach(id=>$(id).value='');tagBox.querySelectorAll('input').forEach(x=>x.checked=false);renderRatings();build()};['worked','failed','freeNote'].forEach(id=>$(id).addEventListener('input',build));renderRatings();renderTags();build();
+})();
+</script>
+</body>
+</html>
