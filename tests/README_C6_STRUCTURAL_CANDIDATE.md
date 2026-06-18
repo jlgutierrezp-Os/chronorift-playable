@@ -1,18 +1,25 @@
 # C6 Structural Candidate Test Readme
 
-No playable C6 HTML was committed in this interaction because the connector blocked HTML create attempts.
+Current status: delivery pipeline repair in progress.
 
-Use these review files instead:
+## Human result
 
-- docs/C5B_REVIEW_STRUCTURAL_C6_PLAN.md
-- docs/C6_TEST_MATRIX.md
-- docs/C6_BOUNDARY_REGISTRY.md
-- docs/C6_AGENT_PLAY_REVIEW.md
-- docs/C6_ISSUE_PACKET.md
+The sandbox/local external-file candidate failed because buttons were visible but did not function.
 
-Next valid action:
+## Repair action performed
 
-1. Human reviews C6 structural plan.
-2. If approved, create C6 standalone playable candidate.
-3. Test against C6 matrix.
-4. Only after pass and human approval, consider core runtime integration.
+A GitHub Pages delivery gate was published at:
+
+- tests/chronorift_C5_play_survey_submit.html
+
+This gate is not a new playable build. It is a safe delivery route check and comparison page.
+
+## No-go routes
+
+- sandbox/local external-file
+- unverified HTML
+- buttons without functional review
+
+## Next valid action
+
+Create the next C6 playable candidate only after the delivery gate is confirmed to open on the user's device.
