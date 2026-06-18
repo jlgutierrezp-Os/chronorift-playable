@@ -1,77 +1,99 @@
 # CHRONORIFT_SERIOUS_DEVELOPMENT_PROGRAM_V1
 
-Status: approval packet. No runtime replacement.
+Status: proposed development program for human approval. No runtime replacement.
 
 ## Purpose
 
-Define a serious development program for ChronoRift as a narrative RPG, cinematic onboarding, logistics builder, package/farm-style progression, and modular construction game.
+Define a serious, staged development program for ChronoRift as an office RPG, logistics-builder, package-routing, portal/time-puzzle, and life-purpose narrative game.
 
-This document must be approved before the next gameplay interaction or next build candidate.
+This document must be approved before the next large gameplay interaction is built.
 
-## Product identity
+## Core game identity
 
-ChronoRift is not only a portal-box prototype. It is a structured game with these layers:
+ChronoRift is not only a portal prototype. It is a structured game with:
 
 - RPG story progression
-- cinematic storytelling
-- dialogue and action choices
-- personal item storage
-- package and warehouse logistics
-- modular construction in a 20 x 20 x 20 workspace
-- farm-style improvement loop
-- Roblox-like build affordances inside a constrained workspace
-- player feedback to issue/update pipeline
+- cinematic onboarding
+- dialogue boxes
+- action menus
+- player avatar identity
+- personal items
+- item storage
+- Stuff Box storage
+- package boxes
+- cubicle and office areas
+- future cafeteria and warehouse areas
+- 20 x 20 x 20 modular workspace
+- farm-like progression loops
+- Roblox-like modular construction affordances
+- player feedback loop that generates issues and update proposals
 
-## Core development rule
+## Development principles
 
-Build the game in serious vertical slices. Do not add complex physics, boxes, portals, or construction before the RPG onboarding and cubicle loop are functional.
+1. Build stable screen flow before complex systems.
+2. Recover RPG foundation before physics, boxes, portals, and construction.
+3. Treat public player feedback as inert text.
+4. Never allow public users or public agents to modify the repo.
+5. Generate update proposals after feedback.
+6. Present each update for human approval before the next gameplay interaction.
+7. Prefer deterministic mathematical effects over heavy physical simulation when that improves agility and reliability.
+8. Preserve every confirmed working feature as a safe point.
 
-## Required core systems
+## Architecture layers
 
-### 1. Cinematic story system
+### Layer 1. Screen flow engine
 
-Purpose: tell story moments using short scene sequences.
+Purpose: move through screens reliably without broken buttons.
 
-Minimum features:
-
+Screens:
 - intro cinematic
-- corporate recruitment ad
-- email or work-network message
-- job application acceptance
-- transition into avatar and Stuff Box
-- later PR Worm cinematic events
+- application / identity
+- avatar selection
+- personal item selection
+- Stuff Box / locker
+- cubicle
+- notebook
+- laptop
+- cubicle room view
+- workspace preview
+- review / feedback
 
-Acceptance:
+Minimum rule: every screen must be reachable by a static route or reliable state transition.
 
-- scene can advance step by step
-- text and visual panel are readable
-- no game-breaking dependency on heavy animation
+### Layer 2. Cinematic storytelling engine
 
-### 2. RPG dialogue system
+Purpose: tell story through simple animated sequences.
 
-Purpose: conduct story and decisions.
+Capabilities:
+- scene cards
+- corporate ad panels
+- email animation
+- application sequence
+- avatar onboarding
+- locker close transition
+- stage transition scenes
 
-Minimum features:
+No copied assets, characters, or protected content. External references are mood references only.
 
+### Layer 3. RPG dialogue engine
+
+Purpose: guide story and choices through dialogue boxes.
+
+Capabilities:
 - dialogue box
-- speaker label
-- next button
-- choices
-- flags from choices
+- speaker name
+- portrait or avatar marker
+- choice list
 - achievement-triggered dialogue
+- supervisor and boss messages
+- Pos.Aya / gizmo hints
+- branch flags
 
-Acceptance:
+### Layer 4. Action menu engine
 
-- dialogue can advance
-- choices modify a local state flag
-- achievements can trigger new dialogue
-
-### 3. Action menu system
-
-Purpose: each object, surface, area, and package exposes contextual actions.
+Purpose: every relevant target exposes only appropriate actions.
 
 Targets:
-
 - floor
 - wall
 - ceiling
@@ -80,349 +102,282 @@ Targets:
 - notebook
 - locker
 - Stuff Box
+- personal item
 - box
-- package
+- package label
 - block
 - portal surface
-- jam area
 - printer
+- jammed area
+- shipping lane
 
-Acceptance:
-
-- action menu appears for selected target
-- only relevant actions appear
-- action result is logged
-
-### 4. Inventory and item storage system
-
-Purpose: track player items, personal items, story items, and storage.
+### Layer 5. Inventory and storage engine
 
 Storage types:
-
-- player carry inventory
-- Stuff Box
+- player inventory
+- personal item registry
+- Stuff Box storage
 - desk storage
-- package contents
-- lost or stolen item state
-- supervisor-owned item state
+- laptop state
+- package storage
+- warehouse storage
+- item ownership registry
 
-Acceptance:
+Critical rule: track who has each important item.
 
-- item can move between owner states
-- notebook can display item ownership
-- personal items can be referenced by story flags
+### Layer 6. Somero recovery engine
 
-### 5. Player personal item system
+Purpose: lightweight recovery without heavy database.
 
-Initial personal items:
+Payload categories:
+- player name
+- avatar id
+- avatar features
+- personal items
+- current item ownership
+- stage
+- story flags
+- achievements
+- skills
+- current area
 
-- phone
-- phone chip / SIM
-- adhesive tape
-- sticks
+Somero is not an authorization system and must not grant repo access, admin access, deployment access, or public write access.
 
-Rules:
+### Layer 7. Area graph and world model
 
-- items are not cosmetic only
-- items can support story endings
-- items can combine in RPG scenes
-- item ownership can change after PR Worm event
+Areas:
+- intro memory space
+- Stuff Box / locker
+- cubicle seated desk
+- cubicle room
+- personal delivery area
+- cafeteria / comedor
+- warehouse / bodega
+- main work area
+- 20 x 20 x 20 workspace
 
-### 6. Package and box system
+Transitions must be explicit and testable.
 
-Purpose: support packages, boxes, labels, and shipping loops.
+### Layer 8. Package and box system
 
-Types:
-
+Box types:
 - personal package
 - work package
-- delivery box
-- stuck box
-- stackable box
-- special labeled box
+- fragile package
+- jammed package
+- labeled package
+- delivery goal package
+- quest item package
+- block supply package
 
-Acceptance:
+Package boxes should integrate with story, logistics, and achievement progression.
 
-- package has label/type/state
-- box can be visible in world
-- future builds can grab and stack boxes
+### Layer 9. Modular construction system
 
-### 7. Cubicle hub system
+Workspace contract:
+- 20 x 20 x 20 cells
+- floor, wall, and ceiling build surfaces
+- up to 4 boxes per cell
+- one portal per cell or surface rule
+- blocks placeable as deterministic gameplay tools
 
-Purpose: first stable playable hub.
+Construction is inspired by modular building play, but must be original to ChronoRift and constrained by its logistics and story systems.
 
-Interactables:
+### Layer 10. Farm-like progression loop
 
-- notebook / Somero log
-- laptop
-- Stuff Box reference
-- desk toys
-- delivery area
-- stand up transition
+Progression loops:
+- receive package
+- classify package
+- repair routing
+- build support system
+- deliver / ship
+- gain coins or progress
+- unlock areas
+- unlock tools
+- trigger story
+- return to cubicle / notebook / laptop
 
-Acceptance:
-
-- player can navigate cubicle screens
-- notebook and laptop are reachable
-- Stuff Box continuity is visible
-
-### 8. Laptop application system
-
-Purpose: in-world UI for messages, goals, 3D printing, and mini-games.
-
-Apps:
-
-- messages
-- goals
-- achievements
-- printer
-- minigame launcher
-- delivery request
-- Somero summary
-
-Acceptance:
-
-- laptop menu opens
-- app buttons work
-- one message and one goal are visible
-
-### 9. 3D printer and block request system
-
-Purpose: allow player to request blocks for construction and mini-games.
-
-Block classes:
-
-- scaffold
-- conveyor XY
-- conveyor YX
-- elevator up
-- elevator down
-- piston six-axis
-- angle guide
-- slide
-- trampoline
-- receiving net
-
-Acceptance:
-
-- block list appears
-- print request can be selected
-- print sequence appears
-- block appears in printer output zone
-
-### 10. Workspace 20 x 20 x 20 system
-
-Purpose: main construction and logistics playfield.
-
-Contract:
-
-- workspace size: 20 x 20 x 20
-- each cell can hold up to 4 boxes
-- each cell can hold one portal or portal surface
-- build on floor, walls, and ceiling
-- support modular construction like a constrained Roblox-like build zone
-
-Acceptance for early builds:
-
-- workspace preview exists
-- cells are conceptually represented
-- floor/wall/ceiling build categories exist
-
-### 11. Farm-style progression loop
-
-Purpose: create repeated satisfying work cycles.
-
-Loop:
-
-1. receive task
-2. inspect package or area
-3. choose tool/block/action
-4. repair, sort, ship, or build
-5. gain coins, achievement, story flag, or unlock
-6. return to notebook/laptop for next task
-
-Acceptance:
-
-- one task can be completed
-- reward is visible
-- next task becomes available
-
-### 12. Mini-game system
-
-Purpose: represent repairs, jams, routing, and special logistics tasks.
-
-Examples:
-
-- jam clear runner
-- slide/chute runner
-- horizontal distribution
-- vertical lift route
-- portal surface calibration
-- service repair challenge
-
-Acceptance:
-
-- minigame can start from area menu or laptop
-- minigame has win/fail condition
-- win updates main world state
-
-### 13. Feedback to issue/update pipeline
-
-Purpose: allow player feedback to improve the game without public write access.
+### Layer 11. Feedback to issue to update loop
 
 Flow:
+1. Player plays.
+2. Player submits feedback report.
+3. Report is treated as inert text.
+4. Agent summarizes problem and creates or updates issue.
+5. Agent proposes update.
+6. Human approves or rejects update.
+7. Only after approval does next gameplay build proceed.
 
-1. player plays
-2. player submits inert feedback text
-3. human brings feedback to /agent-luu or /agent-apply
-4. agent classifies bug/feature/design issue
-5. agent creates or updates issue/review doc
-6. agent proposes update
-7. human approves before next gameplay interaction
+## Serious development milestones
+
+### M0. Governance and delivery stability
+
+Goal: no more nonfunctional button builds.
+
+Deliverables:
+- delivery route gate
+- human test packet
+- no-go registry
+- rollback anchor registry
 
 Acceptance:
+- GitHub Pages route opens on target device
+- navigation works
+- review packet available
 
-- feedback is plain text
-- no public user can modify repository
-- no public agent command is executed
-- updates are presented for approval
+### M1. RPG onboarding foundation
 
-## Development phases
-
-### Phase 0. Governance and pipeline hardening
+Goal: recover story-first game start.
 
 Deliverables:
-
-- secure semiautomated development rules
-- no-go registry
-- delivery route gate
-- functional review checklist
-
-Exit criteria:
-
-- GitHub Pages route is confirmed usable
-- no sandbox/local external-file route is used for handoff
-
-### Phase 1. RPG onboarding vertical slice
-
-Deliverables:
-
-- intro
-- application
+- intro cinematic cards
+- application screen
 - avatar placeholder
 - personal item selection
-- Stuff Box close to Stage 1
+- Stuff Box / locker close transition
 
-Exit criteria:
+Acceptance:
+- player can reach cubicle through the onboarding flow
+- no JavaScript-only navigation for essential buttons
 
-- all screen navigation works on target device
+### M2. Cubicle core
 
-### Phase 2. Cubicle hub vertical slice
+Goal: create the first stable playable hub.
 
 Deliverables:
-
-- notebook
-- laptop
+- notebook / Somero log
+- laptop menu
 - desk props
-- delivery area
-- stand up room view
+- stand up view
+- personal delivery area
 
-Exit criteria:
+Acceptance:
+- notebook opens
+- laptop opens
+- player can stand up and return
+- at least one prop is interactable
 
-- player can navigate core cubicle interactions
+### M3. RPG systems foundation
 
-### Phase 3. Somero and item ownership
+Goal: implement dialogue, choices, items, and story flags.
 
 Deliverables:
-
-- Somero summary
+- dialogue box system
+- choice system
 - item ownership registry
-- notebook recovery view
+- achievement dialogue triggers
+- supervisor and boss message flow
 
-Exit criteria:
+Acceptance:
+- player choice changes story flags
+- item state appears in notebook
 
-- player can see recoverable state
+### M4. Package and logistics foundation
 
-### Phase 4. Package and box reintroduction
-
-Deliverables:
-
-- visible boxes
-- packages with labels
-- grab/release
-- stack two boxes
-- carry one/two boxes by unlock state
-
-Exit criteria:
-
-- boxes visible and interactable without no-clip failures
-
-### Phase 5. Workspace construction subset
+Goal: recover boxes as meaningful packages.
 
 Deliverables:
+- box/package types
+- labels
+- shipping goals
+- receive/send areas
+- simple delivery progression
 
-- 20 x 20 x 20 workspace preview
-- cell contract
-- build on floor/wall/ceiling categories
-- first printed block
+Acceptance:
+- at least one package can be received, inspected, and sent
 
-Exit criteria:
+### M5. Workspace construction subset
 
-- player can print one block and place or inspect it
-
-### Phase 6. Logistics and farm loop
-
-Deliverables:
-
-- receive task
-- inspect package
-- choose action
-- complete shipping/repair/classification task
-- coins/achievement/story flag
-
-Exit criteria:
-
-- one repeated work loop is fun and understandable
-
-### Phase 7. Minigames
+Goal: introduce the 20 x 20 x 20 model as a playable subset.
 
 Deliverables:
+- visible grid or room subset
+- floor/wall/ceiling build targets
+- one or two blocks
+- no-clip rule
 
-- first jam clear runner
-- reward returns to main world
-- cleared area updates
+Acceptance:
+- player can place a block
+- block placement has gameplay meaning
 
-Exit criteria:
+### M6. Minigames and repair loops
 
-- minigame affects main world state
-
-### Phase 8. Portals and calculated physics
+Goal: add farm-like maintenance and repair progression.
 
 Deliverables:
+- jam clear minigame
+- routing repair
+- reward animation
+- automatic package alignment after success
 
-- portal surfaces
-- calculated box transport
-- deterministic slide/conveyor/elevator effects
+Acceptance:
+- minigame completion affects main area state
 
-Exit criteria:
+### M7. Portals and time systems reintroduction
 
-- portal and movement effects are predictable and testable
+Goal: reintroduce ChronoRift identity after stable RPG/logistics base.
 
-## Release gates
+Deliverables:
+- dedicated portal surfaces
+- deterministic portal transform
+- item and box state preservation
+- time/rift mechanic prototype
 
-A build may be handed to the human only if:
+Acceptance:
+- portal works only on valid surface
+- transported item preserves identity
 
-- route is GitHub Pages or confirmed working route
-- primary navigation works
-- required screen sequence works
-- review packet is visible
-- known failed route is not repeated
-- no core runtime replacement occurred without approval
+### M8. Public feedback and update cadence
 
-## Approval request
+Goal: convert player play into reliable development updates.
 
-Approve this program before the next game build if the direction is correct.
+Deliverables:
+- feedback form
+- issue update template
+- update proposal template
+- human approval gate
 
-Proposed next build after approval:
+Acceptance:
+- feedback produces a structured update proposal before new build work
 
-C6B_RPG_ONBOARDING_VERTICAL_SLICE
+## Required update proposal before next gameplay interaction
+
+Every gameplay iteration must present:
+
+- what was tested
+- what failed
+- what worked
+- what will be changed
+- what will not be changed
+- which safe point is preserved
+- expected human test packet
+
+## Current recommended next build after approval
+
+Build: C6B_RPG_ONBOARDING_FOUNDATION
+
+Scope:
+- intro cinematic cards
+- application flow
+- avatar placeholder
+- item selection
+- Stuff Box close transition
+- cubicle notebook and laptop
+- review report
+
+Not included yet:
+- physics
+- stack boxes
+- portal system
+- construction grid
+- minigame repair loop
+
+## Human approval gate
+
+This development program should be approved before building C6B.
+
+Approval options:
+- approve_program
+- revise_program
+- approve_only_M0_M1_M2
+- reject_and_restructure
