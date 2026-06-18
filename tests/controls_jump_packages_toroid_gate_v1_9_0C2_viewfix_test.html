@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>ChronoRift v1.9.0C2 View Fix Test</title>
+<style>
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}html,body{margin:0;height:100%;overflow:hidden;background:#07090d;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}#game{position:fixed;inset:0;width:100%;height:100%;background:#050607;touch-action:none}#hud{position:fixed;left:8px;right:8px;top:calc(env(safe-area-inset-top) + 8px);z-index:5;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;pointer-events:none}#hud span,#hud b{padding:5px 8px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(0,0,0,.24);backdrop-filter:blur(5px)}#msg{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 82px);transform:translateX(-50%);z-index:5;max-width:88vw;text-align:center;padding:9px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.34);color:#e5e7eb;font-size:13px;pointer-events:none}#top{position:fixed;right:8px;top:calc(env(safe-area-inset-top) + 46px);z-index:9;display:flex;gap:6px}button{border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.28);color:#fff;border-radius:14px;font-weight:800;min-height:34px;touch-action:manipulation}#top button{width:62px}#forceView{background:#e5e7eb;color:#0f172a}#joy{position:fixed;left:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);width:118px;height:118px;border-radius:50%;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.035);z-index:6;touch-action:none}#knob{position:absolute;left:38px;top:38px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.14)}#buttons{position:fixed;right:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);z-index:6;display:grid;grid-template-columns:repeat(2,54px);gap:7px}#buttons button{height:40px;font-size:10px}.note{position:fixed;left:8px;top:calc(env(safe-area-inset-top) + 84px);z-index:4;max-width:310px;padding:8px;border-radius:14px;border:1px solid rgba(167,243,208,.18);background:rgba(6,18,18,.34);font-size:11px;color:#dbeafe;pointer-events:none}@media(max-width:430px){.note{max-width:230px;font-size:10px}#buttons{grid-template-columns:repeat(2,52px)}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud"><b>ChronoRift</b><span id="status">v1.9.0C2-viewfix-loading</span><span id="echoLabel">view-fix+grab-preserve</span><span id="fps">fps --</span></div>
+<div id="msg">C2: prueba View mientras tienes paquete en Grab.</div>
+<div id="top"><button id="helpBtn">Pair</button><button id="forceView">View</button><button id="debugBtn">TEST</button></div>
+<div class="note">C2: botón View persistente arriba. Debe cambiar de vista aunque tengas caja/paquete agarrado. Mantiene runtime C.</div>
+<div id="joy"><div id="knob"></div></div>
+<div id="buttons"><button data-act="A">Rift A</button><button data-act="B">Rift B</button><button data-act="J">Jump</button><button data-act="L">View</button><button data-act="F">Grab</button><button data-act="X">Clear</button></div>
+<script src="https://cdn.jsdelivr.net/gh/jlgutierrezp-Os/chronorift-playable@b973a03914437a770af95840930e24df009aac97/app.js"></script>
+<script>
+function forceViewChange(){
+  try{
+    window.dispatchEvent(new KeyboardEvent('keydown',{key:'l',code:'KeyL',bubbles:true}));
+    setTimeout(()=>window.dispatchEvent(new KeyboardEvent('keyup',{key:'l',code:'KeyL',bubbles:true})),30);
+    const msg=document.getElementById('msg');
+    if(msg){msg.textContent='View forzado: grab debe preservarse';msg.style.display='block';}
+  }catch(e){
+    const btn=document.querySelector('[data-act="L"]');
+    if(btn)btn.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
+  }
+}
+document.getElementById('forceView').addEventListener('click',forceViewChange,{passive:true});
+document.getElementById('forceView').addEventListener('touchend',function(e){e.preventDefault();forceViewChange();},{passive:false});
+</script>
+</body>
+</html>
