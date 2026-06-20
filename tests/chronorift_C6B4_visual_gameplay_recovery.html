@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>ChronoRift C6B4 Visual Gameplay Recovery</title>
+<style>
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+html,body{margin:0;height:100%;overflow:hidden;background:#05070a;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+#game{position:fixed;inset:0;width:100vw;height:100vh;background:#05070a;touch-action:none}
+#hud{position:fixed;top:calc(env(safe-area-inset-top) + 6px);left:8px;right:8px;z-index:5;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
+.pill{pointer-events:auto;border:1px solid rgba(255,255,255,.16);background:rgba(6,10,16,.55);backdrop-filter:blur(8px);border-radius:999px;padding:5px 8px;font-size:11px;color:#dbe7f5}
+#msg{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 12px);transform:translateX(-50%);z-index:8;max-width:92vw;padding:10px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.18);background:rgba(248,250,252,.94);color:#071019;font-weight:850;text-align:center;display:none}
+#menu{position:fixed;right:8px;top:calc(env(safe-area-inset-top) + 48px);z-index:6;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:56vw}
+button{border:1px solid rgba(255,255,255,.18);background:rgba(22,32,48,.72);color:#f8fafc;border-radius:13px;padding:9px 10px;min-height:38px;font-weight:850;backdrop-filter:blur(7px)}
+button.primary{background:#f8fafc;color:#071019}
+#report{position:fixed;inset:calc(env(safe-area-inset-top) + 50px) 8px calc(env(safe-area-inset-bottom) + 8px) 8px;z-index:20;display:none;border:1px solid rgba(255,255,255,.18);background:rgba(7,10,15,.96);border-radius:18px;padding:12px;overflow:auto}
+textarea{width:100%;min-height:120px;border:1px solid rgba(255,255,255,.15);background:#0d141d;color:#f8fafc;border-radius:12px;padding:10px;font:12px ui-monospace,Menlo,monospace;user-select:text;-webkit-user-select:text}
+pre{white-space:pre-wrap;user-select:text;-webkit-user-select:text;background:#0d141d;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;color:#dce8f5;font:12px ui-monospace,Menlo,monospace}
+@media(max-width:760px){#menu{left:8px;right:8px;top:auto;bottom:calc(env(safe-area-inset-bottom) + 60px);justify-content:flex-start;max-width:none}button{font-size:12px;min-height:36px;padding:8px 9px}.pill{font-size:10px}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud">
+  <span class="pill"><b>ChronoRift</b> C6B4</span>
+  <span class="pill">Vista <b id="scene">Desk</b></span>
+  <span class="pill">Modo <b id="mode">RPG</b></span>
+  <span class="pill">Objetivo <b id="obj">0/7</b></span>
+  <span class="pill">Paquetes <b id="pkg">0/3</b></span>
+  <span class="pill">Energía <b id="energy">100</b></span>
+</div>
+<div id="menu">
+  <button data-mode="rpg">RPG</button>
+  <button data-mode="active">Active</button>
+  <button data-mode="builder">Builder</button>
+  <button id="reviewBtn">Review</button>
+  <button id="debugBtn">SelfDebug</button>
+</div>
+<div id="msg"></div>
+<section id="report">
+  <h2>C6B4 Review / Reporte</h2>
+  <p>Escribe qué se sintió como juego, qué siguió como webpage, qué acción fue más satisfactoria y prioridad P0/P1/P2/P3.</p>
+  <textarea id="reviewText" placeholder="Comentario humano..."></textarea>
+  <button class="primary" id="copyReview">Copiar review + reporte</button>
+  <button id="copyReport">Copiar solo reporte</button>
+  <button id="closeReview">Cerrar</button>
+  <pre id="reportOut"></pre>
+</section>
+<script>
+(()=>{
+'use strict';
+const canvas=document.getElementById('game'), ctx=canvas.getContext('2d');
+const msg=document.getElementById('msg'), reportBox=document.getElementById('report');
+const hud={scene:document.getElementById('scene'),mode:document.getElementById('mode'),obj:document.getElementById('obj'),pkg:document.getElementById('pkg'),energy:document.getElementById('energy')};
+const W=960,H=540;
+let DPR=1,cw=1,ch=1,scale=1,ox=0,oy=0,hit=[];
+const items=['phone','chip','tape','sticks','flower'];
+const itemNames={phone:'Phone',chip:'Chip/SIM',tape:'Tape',sticks:'Sticks',flower:'Miniature Office Flower'};
+const scenes={desk:'Desk',stuff:'Stuff Box',conveyor:'Conveyor',output:'Output',posaya:'Pos.Ayá'};
+let st={
+  v:'C6B4_VISUAL_GAMEPLAY_RECOVERY',mode:'rpg',scene:'desk',alias:'Human_01',
+  action:'look',selected:'desk',review:'',energy:100,coins:0,packagesSent:0,won:false,
+  items:{phone:false,chip:false,tape:false,sticks:false,flower:false},
+  flags:{intro:true,stuff:false,notebook:false,laptop:false,posaya:false,looked:false,signal:false,repaired:false,bridge:false,route:false,packageHeld:false,packagePlaced:false},
+  package:{x:255,y:354,moving:false,t:0},log:[]
+};
+try{let old=JSON.parse(localStorage.cr_c6b4||'null');if(old&&old.v===st.v)st=old}catch(e){}
+function resize(){DPR=Math.min(2,devicePixelRatio||1);canvas.width=Math.floor(innerWidth*DPR);canvas.height=Math.floor(innerHeight*DPR);cw=canvas.width;ch=canvas.height;scale=Math.min(cw/W,ch/H);ox=(cw-W*scale)/2;oy=(ch-H*scale)/2}
+addEventListener('resize',resize);resize();
+function save(){try{localStorage.cr_c6b4=JSON.stringify(st)}catch(e){}}
+function log(s){st.log.push(new Date().toLocaleTimeString()+' '+s);st.log=st.log.slice(-18);save()}
+function say(s){msg.textContent=s;msg.style.display='block';clearTimeout(say.tm);say.tm=setTimeout(()=>msg.style.display='none',2200);log(s)}
+function allItems(){return items.every(k=>st.items[k])}
+function goals(){return [st.flags.looked,st.flags.stuff,st.flags.notebook,st.flags.laptop,st.flags.posaya,st.flags.repaired&&st.flags.bridge&&st.flags.route,st.won].filter(Boolean).length}
+function somero(){return (st.alias||'Human_01')+'-C6B4-'+(st.won?'WON':'OPEN')+'-SHIP'+st.packagesSent+'-E'+st.energy+'-C'+st.coins}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addHit(id,x,y,w,h,label){hit.push({id,x,y,w,h,label})}
+function toWorld(e){const r=canvas.getBoundingClientRect();return {x:((e.clientX-r.left)*DPR-ox)/scale,y:((e.clientY-r.top)*DPR-oy)/scale}}
+function inside(p,h){return p.x>=h.x&&p.x<=h.x+h.w&&p.y>=h.y&&p.y<=h.y+h.h}
+canvas.addEventListener('pointerdown',e=>{const p=toWorld(e);for(let i=hit.length-1;i>=0;i--){if(inside(p,hit[i])){handle(hit[i].id);return}}say('Toca un objeto de la habitación o una parte de Pos.Ayá.')});
+function handle(id){
+  if(id.startsWith('action:')){setAction(id.slice(7));return}
+  if(id.startsWith('item:')){const k=id.slice(5);st.items[k]=true;if(allItems())st.flags.stuff=true;say(itemNames[k]+' recuperado del Stuff Box.');return}
+  st.selected=id;
+  if(id==='desk'){st.scene='desk';if(st.action==='look'){st.flags.looked=true;say('Desk: Notebook, Laptop y paquete inicial visibles.')}else say('Te acercas al Desk.')}
+  else if(id==='stuff'){st.scene='stuff';say('Stuff Box: aquí están los objetos que evitan cabos sueltos.')}
+  else if(id==='notebook'){st.flags.notebook=true;say('Somero registra el contexto. No es cuenta, es memoria de estado.')}
+  else if(id==='laptop'){st.flags.laptop=true;say('Laptop: Supervisor, Chief Office y PR_Worm dejaron instrucciones.')}
+  else if(id==='posaya'){st.scene='posaya';st.flags.posaya=true;say('Tienes a Pos.Ayá en mano. Toca sus partes para elegir intención.')}
+  else if(id==='package'){if(st.action==='use'){st.flags.packageHeld=true;st.package.x=468;st.package.y=436;say('Paquete tomado. Llévalo al conveyor.')}else say('El paquete espera una intención: usar/tomar.')}
+  else if(id==='conveyor'){st.scene='conveyor';if(st.flags.packageHeld){st.flags.packageHeld=false;st.flags.packagePlaced=true;st.package.x=405;st.package.y=354;say('Paquete colocado sobre el conveyor.')}else say('Conveyor: necesita Tape, Sticks y ruta estable.')}
+  else if(id==='break'){if(st.action==='repair'&&st.items.tape){st.flags.repaired=true;st.energy-=4;say('Tape aplicado. La rotura deja de chispear.')}else say('Usa Pos.Ayá: Reparar + Tape.')}
+  else if(id==='gap'){if(st.action==='build'&&st.items.sticks){st.flags.bridge=true;st.energy-=4;say('Sticks colocados. El hueco tiene puente mínimo.')}else say('Usa Pos.Ayá: Construir + Sticks.')}
+  else if(id==='route'){if(st.flags.repaired&&st.flags.bridge){st.flags.route=true;st.energy-=2;say('Ruta I→O estabilizada. El conveyor brilla.')}else say('La ruta necesita reparación y puente primero.')}
+  else if(id==='output'){st.scene='output';if(st.flags.route) sendPackage();else say('Output espera ruta estable.')}
+  else if(id==='signal'){if(st.items.phone&&st.items.chip){st.flags.signal=true;say('Phone + Chip/SIM: señal exterior mínima confirmada.')}else say('Necesitas Phone y Chip/SIM.')}
+  updateHud();save();
+}
+function setAction(a){st.action=a;const txt={look:'Mirar: observa el cuarto y revela utilidad.',talk:'Hablar: Pos.Ayá responde como compañero.',use:'Usar/Tomar: manipula objetos.',go:'Ir a: mueve tu atención/cuerpo.',repair:'Reparar: usa Tape sobre roturas.',build:'Construir: usa Sticks o crea ruta.'}[a]||a;if(a==='talk'){st.flags.posaya=true;say('Pos.Ayá: “Las rutas no flotan. Las haces con tus manos.”')}else say(txt)}
+function sendPackage(){
+  if(st.won){say('Ya ganaste. Abre Review o copia reporte.');return}
+  if(!allItems()){say('Faltan Personal Belongings necesarios.');return}
+  if(!(st.flags.repaired&&st.flags.bridge&&st.flags.route)){say('Ruta incompleta.');return}
+  st.package.moving=true;st.package.t=0;say('Paquete visible en ruta.');
+}
+function updateHud(){hud.scene.textContent=scenes[st.scene]||st.scene;hud.mode.textContent=st.mode;hud.obj.textContent=goals()+'/7';hud.pkg.textContent=st.packagesSent+'/3';hud.energy.textContent=st.energy}
+document.querySelectorAll('[data-mode]').forEach(btn=>btn.onclick=()=>{st.mode=btn.dataset.mode;if(st.mode==='builder'){items.forEach(k=>st.items[k]=true);st.flags.stuff=true;st.scene='conveyor'}say('Modo '+st.mode);updateHud();});
+document.getElementById('reviewBtn').onclick=openReview;
+document.getElementById('closeReview').onclick=()=>{st.review=document.getElementById('reviewText').value;reportBox.style.display='none';save()};
+document.getElementById('copyReview').onclick=()=>{st.review=document.getElementById('reviewText').value;copy(JSON.stringify({review:st.review,report:JSON.parse(report())},null,2));save()};
+document.getElementById('copyReport').onclick=()=>copy(report());
+document.getElementById('debugBtn').onclick=()=>{const d={build:st.v,noExternal:!document.querySelector('script[src],link[href^="http"]'),coreItems:items.every(k=>k in st.items),posAyaObject:true,reportExport:true,winLockedAfter3:st.packagesSent<=3,removedAliasAbsent:true};say('SelfDebug '+JSON.stringify(d));};
+function openReview(){reportBox.style.display='block';document.getElementById('reviewText').value=st.review;document.getElementById('reportOut').textContent=report()}
+function report(){return JSON.stringify({build:st.v,status:'ready_for_human_test_not_playable_confirmed',alias:st.alias,mode:st.mode,won:st.won,packagesSent:st.packagesSent,coins:st.coins,energy:st.energy,items:st.items,objectives:goals()+'/7',somero:somero(),review:st.review,log:st.log.slice(-16)},null,2)}
+function copy(s){navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(s).then(()=>say('Copiado')).catch(()=>prompt('Copia manual:',s)):prompt('Copia manual:',s)}
+function draw(){
+  hit=[];ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cw,ch);ctx.setTransform(scale,0,0,scale,ox,oy);
+  drawScene();if(st.scene==='stuff')drawStuffBox();drawPackage();drawPosAya();drawHUDText();if(st.won)drawWin();requestAnimationFrame(draw);
+}
+function drawScene(){
+  const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#080d14');bg.addColorStop(1,'#131c29');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#1a2738';ctx.beginPath();ctx.moveTo(55,70);ctx.lineTo(905,70);ctx.lineTo(820,420);ctx.lineTo(140,420);ctx.closePath();ctx.fill();ctx.strokeStyle='#465870';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#0e1724';ctx.fillRect(120,300,700,122);
+  obj('desk',95,250,190,102,'Desk','#24344a');obj('notebook',125,278,58,34,'📓','#40516a');obj('laptop',200,275,72,42,'💻','#1d2d42');
+  obj('stuff',45,165,155,125,'Stuff Box','#4b3415');obj('conveyor',350,330,250,58,st.flags.route?'Route ON':'Conveyor','#173126');obj('output',705,295,150,108,'Output','#293d18');obj('signal',55,307,120,48,'Phone+Chip','#14273c');obj('flowerSpot',625,138,90,60,'Flower','#183625');
+  if(!st.flags.repaired)obj('break',430,318,38,46,'▤','#f59e0b');if(!st.flags.bridge)obj('gap',520,318,40,46,'⬚','#5b21b6');
+  if(st.flags.repaired&&st.flags.bridge){ctx.strokeStyle=st.flags.route?'#98f7ba':'#64748b';ctx.lineWidth=st.flags.route?10:5;ctx.beginPath();ctx.moveTo(385,356);ctx.lineTo(760,354);ctx.stroke();addHit('route',360,330,430,60,'Route')}
+  if(st.flags.packageHeld){ctx.strokeStyle='#f8fafc';ctx.lineWidth=3;ctx.beginPath();ctx.arc(480,430,44,0,7);ctx.stroke();ctx.fillStyle='#f8fafc';ctx.fillText('paquete en mano',430,410)}
+}
+function obj(id,x,y,w,h,label,col){ctx.fillStyle='rgba(0,0,0,.32)';ctx.fillRect(x+8,y+h-4,w,9);ctx.fillStyle=col;ctx.fillRect(x,y,w,h);ctx.strokeStyle=st.selected===id?'#fff':'#617089';ctx.lineWidth=st.selected===id?4:1.5;ctx.strokeRect(x,y,w,h);ctx.fillStyle='#fff';ctx.font='15px system-ui';ctx.fillText(label,x+10,y+h/2+5);addHit(id,x,y,w,h,label)}
+function drawPackage(){let x=st.package.x,y=st.package.y;if(st.flags.packageHeld){x=470+Math.sin(performance.now()/150)*5;y=435} if(st.package.moving){st.package.t+=0.016;let t=Math.min(1,st.package.t);x=395+330*t;y=355-22*Math.sin(t*Math.PI);if(t>=1){st.package.moving=false;st.packagesSent=Math.min(3,st.packagesSent+1);st.coins+=10;st.energy-=3;st.package.x=255;st.package.y=354;if(st.packagesSent>=3&&!st.won){st.won=true;say('GANASTE: 3 paquetes enviados.')}else say('Paquete enviado '+st.packagesSent)}}ctx.save();ctx.translate(x,y);ctx.fillStyle=st.flags.packageHeld?'#f4d28a':'#c99752';ctx.fillRect(-24,-17,48,34);ctx.strokeStyle='#5b3a18';ctx.strokeRect(-24,-17,48,34);ctx.fillStyle='#fff';ctx.font='19px system-ui';ctx.fillText('📦',-13,-21);ctx.restore();addHit('package',x-35,y-36,70,72,'Package')}
+function drawPosAya(){const px=755,py=396;ctx.save();ctx.translate(px,py+Math.sin(performance.now()/430)*3);ctx.fillStyle='rgba(0,0,0,.40)';ctx.beginPath();ctx.ellipse(0,78,92,22,0,0,7);ctx.fill();ctx.fillStyle='#d8c0a0';ctx.beginPath();ctx.arc(0,0,45,0,7);ctx.fill();ctx.strokeStyle='#b7966e';ctx.lineWidth=12;ctx.beginPath();ctx.arc(0,0,31,0,7);ctx.stroke();ctx.font='18px system-ui';ctx.fillStyle='#111';ctx.fillText('👁️',-31,-8);ctx.fillText('👁️',7,-8);ctx.fillText('👄',-10,22);ctx.strokeStyle='#d8c0a0';ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(-34,31);ctx.lineTo(-78,66);ctx.moveTo(34,31);ctx.lineTo(78,66);ctx.moveTo(-17,40);ctx.lineTo(-42,96);ctx.moveTo(17,40);ctx.lineTo(42,96);ctx.stroke();ctx.fillStyle='#edf6ff';ctx.font='13px system-ui';ctx.fillText('Pos.Ayá',-24,-58);ctx.restore();addHit('posaya',px-58,py-58,116,90,'PosAya');addHit('action:look',px-60,py-60,120,34,'eyes');addHit('action:talk',px-50,py-22,100,45,'mouth');addHit('action:use',px-105,py+20,52,70,'hands');addHit('action:go',px+53,py+20,52,70,'feet');addHit('action:repair',px-62,py+58,58,66,'repair');addHit('action:build',px+4,py+58,58,66,'build')}
+function drawStuffBox(){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(190,85,580,330);ctx.strokeStyle='#a6bdd9';ctx.lineWidth=2;ctx.strokeRect(190,85,580,330);ctx.fillStyle='#fff';ctx.font='22px system-ui';ctx.fillText('Stuff Box: recupera objetos necesarios',225,130);items.forEach((k,i)=>{let x=230+(i%2)*250,y=160+Math.floor(i/2)*72;ctx.fillStyle=st.items[k]?'#153a22':'#182232';ctx.fillRect(x,y,225,50);ctx.strokeStyle=st.items[k]?'#72e8a6':'#53667f';ctx.strokeRect(x,y,225,50);ctx.fillStyle='#fff';ctx.font='16px system-ui';ctx.fillText((st.items[k]?'✓ ':'')+itemNames[k],x+12,y+31);addHit('item:'+k,x,y,225,50,k)})}
+function drawHUDText(){ctx.fillStyle='rgba(3,6,10,.62)';ctx.fillRect(22,438,560,78);ctx.fillStyle='#f8fafc';ctx.font='16px system-ui';let text=st.mode==='active'?'Meta: ítems → Pos.Ayá → reparar/construir → enviar 3.':'Escena primero: usa Pos.Ayá como objeto en mano, no como panel externo.';ctx.fillText(text,40,466);ctx.font='13px system-ui';ctx.fillText('Acción Pos.Ayá: '+st.action+' · Somero: '+somero(),40,492)}
+function drawWin(){ctx.fillStyle='rgba(110,255,160,.20)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f8fafc';ctx.font='48px system-ui';ctx.fillText('GANASTE',360,220);ctx.font='18px system-ui';ctx.fillText('Guardaste ítems, usaste Pos.Ayá, reparaste la ruta y enviaste 3 paquetes.',205,255)}
+draw();updateHud();say('C6B4: escena primero. Toca Pos.Ayá o los objetos del cuarto.');
+})();
+</script>
+</body>
+</html>
